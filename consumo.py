@@ -58,6 +58,19 @@ while restart == 'S':
     if carroC == 'S':
         transporte.append('carroC')
     
+    carroE = input('Você utiliza carro elétrico como meio de transporte? (S/N): ').upper()
+    while carroE not in ['S', 'N']:
+        print('Opção inválida!')
+        carroE = input('Você utiliza carro elétrico como meio de transporte? (S/N): ').upper()
+    if carroE == 'S':
+        transporte.append('carroE')
+
+    carona = input('Você costuma usar de carona como meio de transporte? (S/N): ').upper()
+    while carona not in ['S','N']:
+        print('Opção inválida!')
+        carona = input('Você costuma usar de carona como meio de transporte? (S/N): ').upper()
+    if carona == 'S':
+        transporte.append('carona')
 
 
 
