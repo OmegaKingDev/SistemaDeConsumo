@@ -27,4 +27,14 @@ while restart == 'S':
         print('Valor inválido!')
         energia = float(input('Digite o consumo de energia em kWh: '))
 
+    bic = input('Você utiliza bicicleta como meio de transporte? (S/N): ').upper()
+    while bic not in ['S', 'N']:
+        print('Opção inválida!')
+        bic = input('Você utiliza bicicleta como meio de transporte? (S/N): ').upper()
+
+
     restart = input('Quer fazer uma outra analise? (S/N): ').upper()
+    while restart not in ['S', 'N']:
+        print('Opção inválida!')
+        restart = input('Quer fazer uma outra analise? (S/N): ').upper()
+    
