@@ -1,4 +1,4 @@
 # SistemaDeConsumo
-Sistema de consumo do projeto Integrador PUC - CAMPINAS.
+Desenvolvimento do sistema de consumo - Prrojeto Intehrador PUC CAMPINAS. (Para o dia: 27/06/2025)
 
-Desenvolvimento de Sistema de consumo do Projeto Integrador PUC CAMPINAS para o dia 27/05/2025
+The development of the consumption system - Projeto Integrador PUC CAMPINAS. (Due: 27/06/2025)
