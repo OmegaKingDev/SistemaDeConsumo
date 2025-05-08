@@ -1,28 +1,34 @@
 from datetime import date
 restart = 'S'
 
+
+#================= FUNÇÕES ==================================
+def error():
+    print('Valor inválido!')
+
+#======================================================== ====   
+
 while restart == 'S':
     data = date.today()
-
 #================= CONSUMO ==================================
     agua = float(input('Digite o consumo de água em litros: '))
     while agua <= 0:
-        print('Valor inválido!')
+        error()
         agua = float(input('Digite o consumo de água em litros: '))
 
-    reciclavel = float(input('Informe a quantidade de lixo reciclável em kg: '))
+    reciclavel = float(input('Informe a porcentagem de lixo reciclado: '))
     while reciclavel <= 0:
-        print('Valor inválido!')
+        error()
         reciclavel = float(input('Informe a quantidade de lixo reciclável em kg: '))
 
     lixo = float(input('Informe a quantidade de lixo total produzido: '))
     while lixo <= 0:
-        print('Valor inválido!')
+        error()
         lixo = float(input('Informe a quantidade de lixo total produzido: '))
 
     energia = float(input('Digite o consumo de energia em kWh: '))
     while energia <= 0:
-        print('Valor inválido!')
+        error()
         energia = float(input('Digite o consumo de energia em kWh: '))
 
 #================= CONSUMO ANALISE =============================
@@ -35,48 +41,66 @@ while restart == 'S':
     else:
         aguaS = 'Baixa sustentabilidade de água'
 
+
+    if reciclavel > 50:
+        reciclavelS = 'Alta sustentabilidade de reciclagem de lixo'
+
+    elif reciclavel > 20:
+        reciclavelS = 'Sustentabilidade moderada de reciclagem de lixo'
+    
+    else:
+        reciclavelS =  'Baixa sustentabilidade de reciclagem de lixo'
+
+
+    if energia < 5:
+        energiaS = 'Alta sustentabilidade de energia'
+    elif energia <= 10:
+        energiaS = 'Sustentabilidade moderada de energia'
+    else:
+        energiaS = 'Baixa sustentabilidade de energia'
+    
 #============= INSERIR TRANSPORTE NA LISTA ======================
 
     transporte = []
 
     bic = input('Você utiliza bicicleta como meio de transporte? (S/N): ').upper()
     while bic not in ['S', 'N']:
-        print('Opção inválida!')
+        error()
         bic = input('Você utiliza bicicleta como meio de transporte? (S/N): ').upper()
     if bic == 'S':
         transporte.append('bicicleta')
     
     pub = input('Você utiliza transporte público? (S/N): ').upper()
     while pub not in ['S', 'N']:
-        print('Opção inválida!')
+        error()
         pub = input('Você utiliza transporte público? (S/N): ').upper()
     if pub == 'S':
         transporte.append('transporteP')
 
     caminhada = input('Você costuma fazer caminhada para ir aos lugares? (S/N):').upper()
     while caminhada not in ['S', 'N']:
-        print('Opcão inválida!')
+        error()
         caminhada = input('Você costuma fazer caminhada para ir aos lugares? (S/N):').upper()
     if caminhada == 'S':
         transporte.append('caminhada')
 
     carroC = input('Você utiliza carro com combustivel fossil para se locomover? (S/N): ').upper()
     while carroC not in ['S', 'N']:
-        print('Opção inválida!')
+        error()
         carroC = input('Você utiliza carro com combustivel fossil para se locomover? (S/N): ').upper()
     if carroC == 'S':
         transporte.append('carroC')
     
     carroE = input('Você utiliza carro elétrico como meio de transporte? (S/N): ').upper()
     while carroE not in ['S', 'N']:
-        print('Opção inválida!')
+        error()
         carroE = input('Você utiliza carro elétrico como meio de transporte? (S/N): ').upper()
     if carroE == 'S':
         transporte.append('carroE')
 
     carona = input('Você costuma usar de carona como meio de transporte? (S/N): ').upper()
     while carona not in ['S','N']:
-        print('Opção inválida!')
+        error()
         carona = input('Você costuma usar de carona como meio de transporte? (S/N): ').upper()
     if carona == 'S':
         transporte.append('carona')
@@ -100,12 +124,18 @@ while restart == 'S':
 
 #============== PRINT DAS ANALISES ===================
 
-
+    print(aguaS)
+    print(reciclavelS)
+    print(energiaS)
     print(sustentabilidade)
+    
+
 
 #==================== RESTART ========================
 
     restart = input('Quer fazer uma outra analise? (S/N): ').upper()
     while restart not in ['S', 'N']:
-        print('Opção inválida!')
+        error()
         restart = input('Quer fazer uma outra analise? (S/N): ').upper()
+
+        
