@@ -1,12 +1,10 @@
 from datetime import date
 restart = 'S'
 
-
-agua = 0
-
 while restart == 'S':
     data = date.today()
 
+#================= CONSUMO ==================================
     agua = float(input('Digite o consumo de água em litros: '))
     while agua <= 0:
         print('Valor inválido!')
@@ -27,7 +25,18 @@ while restart == 'S':
         print('Valor inválido!')
         energia = float(input('Digite o consumo de energia em kWh: '))
 
-#============= INSERIR TRANSPORTE NA LISTA ==================
+#================= CONSUMO ANALISE =============================
+    if agua < 150:
+        aguaS = 'Alta sustentabilidade de água'
+
+    elif agua <= 200:
+        aguaS = 'Sustentabilidade moderada de água'
+
+    else:
+        aguaS = 'Baixa sustentabilidade de água'
+
+#============= INSERIR TRANSPORTE NA LISTA ======================
+
     transporte = []
 
     bic = input('Você utiliza bicicleta como meio de transporte? (S/N): ').upper()
@@ -42,19 +51,19 @@ while restart == 'S':
         print('Opção inválida!')
         pub = input('Você utiliza transporte público? (S/N): ').upper()
     if pub == 'S':
-        transporte.append('transporte público')
+        transporte.append('transporteP')
 
-    caminhada = input('Você costuma fazer caminhada para ir aos lugares? `(S/N):').upper()
+    caminhada = input('Você costuma fazer caminhada para ir aos lugares? (S/N):').upper()
     while caminhada not in ['S', 'N']:
         print('Opcão inválida!')
-        caminhada = input('Você costuma fazer caminhada para ir aos lugares? `(S/N):').upper()
+        caminhada = input('Você costuma fazer caminhada para ir aos lugares? (S/N):').upper()
     if caminhada == 'S':
         transporte.append('caminhada')
 
-    carroC = input('Você utiliza carro com commbustivel fossil para se locomover? (S/N): ').upper()
+    carroC = input('Você utiliza carro com combustivel fossil para se locomover? (S/N): ').upper()
     while carroC not in ['S', 'N']:
         print('Opção inválida!')
-        carroC = input('Você utiliza carro com commbustivel fossil para se locomover? (S/N): ').upper()
+        carroC = input('Você utiliza carro com combustivel fossil para se locomover? (S/N): ').upper()
     if carroC == 'S':
         transporte.append('carroC')
     
@@ -72,7 +81,29 @@ while restart == 'S':
     if carona == 'S':
         transporte.append('carona')
 
+#================== analise transporte ======================
 
+    alta = ['caminhada', 'carroE', 'bicicleta', 'transporteP']
+    moderado = ['carroC', 'carona']
+
+    if any(v in transporte for v in alta):
+        sustentabilidade = 'Alta sustentabilidade'
+
+    elif any(v in transporte for v in moderado):
+        sustentabilidade = 'Sustentabilidade moderada'
+
+    else:
+        sustentabilidade = 'Baixa sustentabilidade'
+
+    if not any(v in transporte for v in alta):
+        sustentabilidade = 'Baixa sustentabilidade'
+
+#============== PRINT DAS ANALISES ===================
+
+
+    print(sustentabilidade)
+
+#==================== RESTART ========================
 
     restart = input('Quer fazer uma outra analise? (S/N): ').upper()
     while restart not in ['S', 'N']:
