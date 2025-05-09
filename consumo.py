@@ -5,6 +5,11 @@ reciclavel = 0
 lixo = 0
 energia = 0
 transporte = []
+sustentabilidade = 0
+aguaS = 0
+reciclavelS = 0
+energiaS = 0
+
 
 
 #================= FUNÇÕES ==================================
@@ -13,9 +18,10 @@ def error():
 
 #======================================================== ====   
 
-while restart == 'S':
-    data = date.today()
+
 #================= CONSUMO ==================================
+
+def consumo():
     agua = float(input('Digite o consumo de água em litros: '))
     while agua <= 0:
         error()
@@ -52,7 +58,7 @@ while restart == 'S':
 
     elif reciclavel > 20:
         reciclavelS = 'Sustentabilidade moderada de reciclagem de lixo'
-    
+        
     else:
         reciclavelS =  'Baixa sustentabilidade de reciclagem de lixo'
 
@@ -63,9 +69,13 @@ while restart == 'S':
         energiaS = 'Sustentabilidade moderada de energia'
     else:
         energiaS = 'Baixa sustentabilidade de energia'
+
+    return aguaS, reciclavelS, energiaS
+
+
     
 #============= INSERIR TRANSPORTE NA LISTA ======================
-
+def transporteFuncion():
    
 
     bic = input('Você utiliza bicicleta como meio de transporte? (S/N): ').upper()
@@ -74,7 +84,7 @@ while restart == 'S':
         bic = input('Você utiliza bicicleta como meio de transporte? (S/N): ').upper()
     if bic == 'S':
         transporte.append('bicicleta')
-    
+        
     pub = input('Você utiliza transporte público? (S/N): ').upper()
     while pub not in ['S', 'N']:
         error()
@@ -95,7 +105,7 @@ while restart == 'S':
         carroC = input('Você utiliza carro com combustivel fossil para se locomover? (S/N): ').upper()
     if carroC == 'S':
         transporte.append('carroC')
-    
+        
     carroE = input('Você utiliza carro elétrico como meio de transporte? (S/N): ').upper()
     while carroE not in ['S', 'N']:
         error()
@@ -109,9 +119,10 @@ while restart == 'S':
         carona = input('Você costuma usar de carona como meio de transporte? (S/N): ').upper()
     if carona == 'S':
         transporte.append('carona')
-
+        
+    return transporte
 #================== analise transporte ======================
-
+def analiseTransporte(transporte):
     alta = ['caminhada', 'carroE', 'bicicleta', 'transporteP']
     moderado = ['carroC', 'carona']
 
@@ -123,18 +134,27 @@ while restart == 'S':
 
     if not any(v in transporte for v in alta):
         sustentabilidade = 'Baixa sustentabilidade em transporte'
+    
+    if transporte == []:
+        sustentabilidade = 'Você não escolheu nenhum meio de transporte!'
+
+    return sustentabilidade
 
 #============== PRINT DAS ANALISES ===================
-
-    print(aguaS)
-    print(reciclavelS)
-    print(energiaS)
-    print(sustentabilidade)
-
+  
+while restart == 'S':
+    data = date.today()
+    aguaS, reciclavelS, energiaS = consumo()
+    transporte = transporteFuncion()
+    sustentabilidade = analiseTransporte(transporte)
+    print(f'\n{aguaS}')
+    print(f'\n{reciclavelS}')
+    print(f'\n{energiaS}')
+    print(f'\n{sustentabilidade}')
+    transporte = []
 #==================== RESTART ========================
 
-    restart = input('Quer fazer uma outra analise? (S/N): ').upper()
-    transporte = []
+    restart = input('\nQuer fazer uma outra analise? (S/N): ').upper()
     while restart not in ['S', 'N']:
         error()
-        restart = input('Quer fazer uma outra analise? (S/N): ').upper()
+        restart = input('\nQuer fazer uma outra analise? (S/N): ').upper()
