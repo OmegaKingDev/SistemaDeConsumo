@@ -129,9 +129,7 @@ while restart == 'S':
 #==================== RESTART ========================
 
     restart = input('Quer fazer uma outra analise? (S/N): ').upper()
+    trnasporte = []
     while restart not in ['S', 'N']:
         error()
         restart = input('Quer fazer uma outra analise? (S/N): ').upper()
-
-        
-        
