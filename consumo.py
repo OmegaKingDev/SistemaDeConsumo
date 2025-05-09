@@ -125,7 +125,7 @@ while restart == 'S':
     print(reciclavelS)
     print(energiaS)
     print(sustentabilidade)
-    
+
 #==================== RESTART ========================
 
     restart = input('Quer fazer uma outra analise? (S/N): ').upper()
