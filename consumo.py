@@ -1,5 +1,10 @@
 from datetime import date
 restart = 'S'
+agua = 0
+reciclavel = 0
+lixo = 0
+energia = 0
+transporte = []
 
 
 #================= FUNÇÕES ==================================
@@ -61,7 +66,7 @@ while restart == 'S':
     
 #============= INSERIR TRANSPORTE NA LISTA ======================
 
-    transporte = []
+   
 
     bic = input('Você utiliza bicicleta como meio de transporte? (S/N): ').upper()
     while bic not in ['S', 'N']:
@@ -129,7 +134,7 @@ while restart == 'S':
 #==================== RESTART ========================
 
     restart = input('Quer fazer uma outra analise? (S/N): ').upper()
-    trnasporte = []
+    transporte = []
     while restart not in ['S', 'N']:
         error()
         restart = input('Quer fazer uma outra analise? (S/N): ').upper()
