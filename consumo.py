@@ -4,8 +4,7 @@ agua = 0
 reciclavel = 0
 lixo = 0
 energia = 0
-transporte = []
-sustentabilidade = 0
+
 aguaS = 0
 reciclavelS = 0
 energiaS = 0
@@ -52,7 +51,6 @@ def consumo():
     else:
         aguaS = 'Baixa sustentabilidade de água'
 
-
     if reciclavel > 50:
         reciclavelS = 'Alta sustentabilidade de reciclagem de lixo'
 
@@ -61,7 +59,6 @@ def consumo():
         
     else:
         reciclavelS =  'Baixa sustentabilidade de reciclagem de lixo'
-
 
     if energia < 5:
         energiaS = 'Alta sustentabilidade de energia'
@@ -77,7 +74,7 @@ def consumo():
 #============= INSERIR TRANSPORTE NA LISTA ======================
 def transporteFuncion():
    
-
+    transporte = []
     bic = input('Você utiliza bicicleta como meio de transporte? (S/N): ').upper()
     while bic not in ['S', 'N']:
         error()
