@@ -1,15 +1,7 @@
 import mysql.connector
 from datetime import date
 
-restart = 'S'
-agua = 0
-reciclavel = 0
-lixo = 0
-energia = 0
 
-aguaS = 0
-reciclavelS = 0
-energiaS = 0
 
 
 
@@ -27,13 +19,13 @@ def conexaobd():
     )
 
     if conexao.is_connected():
-        print("Banco de dados está conectado!")
         cursor = conexao.cursor()
-    else:
-        print("Não foi possivel fazer a conexão do banco de dados")
 
-    conexao.close()
-    cursor.close()
+
+
+
+
+
     return conexao, cursor
 
 def consumo():
@@ -43,9 +35,9 @@ def consumo():
         agua = float(input('Digite o consumo de água em litros: '))
 
     reciclavel = float(input('Informe a porcentagem de lixo reciclado: '))
-    while reciclavel <= 0:
+    while reciclavel <= 0 or reciclavel > 100:
         error()
-        reciclavel = float(input('Informe a quantidade de lixo reciclável em kg: '))
+        reciclavel = float(input('Informe a porcentagem de lixo reciclável: '))
 
     lixo = float(input('Informe a quantidade de lixo total produzido: '))
     while lixo <= 0:
@@ -84,7 +76,7 @@ def consumo():
     else:
         energiaS = 'Baixa sustentabilidade de energia'
 
-    return aguaS, reciclavelS, energiaS
+    return aguaS, reciclavelS, energiaS, lixo, reciclavel, energia, agua
 
 
     
@@ -157,21 +149,37 @@ def analiseTransporte(transporte):
 
 #============== PRINT DAS ANALISES ===================
 
-conexaobd()
 
-while restart == 'S':
-    data = date.today()
-    aguaS, reciclavelS, energiaS = consumo()
-    transporte = transporteFuncion()
-    sustentabilidade = analiseTransporte(transporte)
-    print(f'\n{aguaS}')
-    print(f'\n{reciclavelS}')
-    print(f'\n{energiaS}')
-    print(f'\n{sustentabilidade}')
-    transporte = []
-#==================== RESTART ========================
+def rodar():
+    restart = 'S'
+    while restart == 'S':
+        data = date.today()
+        aguaS, reciclavelS, energiaS, lixo, reciclavel, energia, agua = consumo()
+        transporte = transporteFuncion()
+        sustentabilidade = analiseTransporte(transporte)
+        print(f'\n{aguaS}')
+        print(f'\n{reciclavelS}')
+        print(f'\n{energiaS}')
+        print(f'\n{sustentabilidade}')
+        
+#============ INSERT NO BANCO DE DADOS ================
 
-    restart = input('\nQuer fazer uma outra analise? (S/N): ').upper()
-    while restart not in ['S', 'N']:
-        error()
+        conexao, cursor = conexaobd()
+
+        cursor.execute(
+            "INSERT INTO analise (data, litros, porcentagem_reciclavel, lixo, energia, bicicleta, publico, caminhada, fossil, eletrico, carona, sustentabilidade_agua, sustentabilidade_lixo, sustentabilidade_energia, sustentabilidade_transporte) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(data, agua,reciclavel,lixo,energia,'bicicleta' in transporte,'transporteP' in transporte,'caminhada' in transporte,'carroC' in transporte,'carroE' in transporte,'carona' in transporte,aguaS,reciclavelS,energiaS,sustentabilidade))
+        
+        conexao.commit()
+        conexao.close()
+        cursor.close()
+        transporte = []
+    #==================== RESTART ========================
+
         restart = input('\nQuer fazer uma outra analise? (S/N): ').upper()
+        while restart not in ['S', 'N']:
+            error()
+            restart = input('\nQuer fazer uma outra analise? (S/N): ').upper()
+
+    return data
+
+rodar()
