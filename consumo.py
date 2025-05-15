@@ -1,4 +1,6 @@
+import mysql.connector
 from datetime import date
+
 restart = 'S'
 agua = 0
 reciclavel = 0
@@ -11,14 +13,28 @@ energiaS = 0
 
 
 
-#================= FUNÇÕES ==================================
+
 def error():
     print('Valor inválido!')
 
-#======================================================== ====   
 
+def conexaobd():
+    conexao = mysql.connector.connect(
+        host = 'localhost',
+        database = 'projeto_integrador',
+        user = 'root',
+        password = '6"gB"92H:|LK6'
+    )
 
-#================= CONSUMO ==================================
+    if conexao.is_connected():
+        print("Banco de dados está conectado!")
+        cursor = conexao.cursor()
+    else:
+        print("Não foi possivel fazer a conexão do banco de dados")
+
+    conexao.close()
+    cursor.close()
+    return conexao, cursor
 
 def consumo():
     agua = float(input('Digite o consumo de água em litros: '))
@@ -41,7 +57,8 @@ def consumo():
         error()
         energia = float(input('Digite o consumo de energia em kWh: '))
 
-#================= CONSUMO ANALISE =============================
+
+
     if agua < 150:
         aguaS = 'Alta sustentabilidade de água'
 
@@ -71,7 +88,7 @@ def consumo():
 
 
     
-#============= INSERIR TRANSPORTE NA LISTA ======================
+
 def transporteFuncion():
    
     transporte = []
@@ -118,7 +135,8 @@ def transporteFuncion():
         transporte.append('carona')
         
     return transporte
-#================== analise transporte ======================
+
+
 def analiseTransporte(transporte):
     alta = ['caminhada', 'carroE', 'bicicleta', 'transporteP']
     moderado = ['carroC', 'carona']
@@ -138,7 +156,9 @@ def analiseTransporte(transporte):
     return sustentabilidade
 
 #============== PRINT DAS ANALISES ===================
-  
+
+conexaobd()
+
 while restart == 'S':
     data = date.today()
     aguaS, reciclavelS, energiaS = consumo()
