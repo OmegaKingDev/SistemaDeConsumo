@@ -42,29 +42,29 @@ def consumo():
 
 
     if agua < 150:
-        aguaS = 'Alta sustentabilidade de água'
+        aguaS = 'Alta sustentabilidade'
 
     elif agua <= 200:
-        aguaS = 'Sustentabilidade moderada de água'
+        aguaS = 'Sustentabilidade moderada'
 
     else:
-        aguaS = 'Baixa sustentabilidade de água'
+        aguaS = 'Baixa sustentabilidade'
 
     if reciclavel > 50:
-        reciclavelS = 'Alta sustentabilidade de reciclagem de lixo'
+        reciclavelS = 'Alta sustentabilidade'
 
     elif reciclavel > 20:
-        reciclavelS = 'Sustentabilidade moderada de reciclagem de lixo'
+        reciclavelS = 'Sustentabilidade moderada'
         
     else:
-        reciclavelS =  'Baixa sustentabilidade de reciclagem de lixo'
+        reciclavelS =  'Baixa sustentabilidade'
 
     if energia < 5:
-        energiaS = 'Alta sustentabilidade de energia'
+        energiaS = 'Alta sustentabilidade'
     elif energia <= 10:
-        energiaS = 'Sustentabilidade moderada de energia'
+        energiaS = 'Sustentabilidade moderada'
     else:
-        energiaS = 'Baixa sustentabilidade de energia'
+        energiaS = 'Baixa sustentabilidade'
 
     return aguaS, reciclavelS, energiaS, lixo, reciclavel, energia, agua
 
@@ -124,13 +124,13 @@ def analiseTransporte(transporte):
     moderado = ['carroC', 'carona']
 
     if any(v in transporte for v in alta):
-        sustentabilidade = 'Alta sustentabilidade em transporte'
+        sustentabilidade = 'Alta sustentabilidade'
 
     if any(v in transporte for v in moderado):
-        sustentabilidade = 'Sustentabilidade moderada em transporte'
+        sustentabilidade = 'Sustentabilidade moderada'
 
     if not any(v in transporte for v in alta):
-        sustentabilidade = 'Baixa sustentabilidade em transporte'
+        sustentabilidade = 'Baixa sustentabilidade'
     
     if transporte == []:
         sustentabilidade = 'Você não escolheu nenhum meio de transporte!'
@@ -147,10 +147,11 @@ def rodar():
         aguaS, reciclavelS, energiaS, lixo, reciclavel, energia, agua = consumo()
         transporte = transporteFuncion()
         sustentabilidade = analiseTransporte(transporte)
-        print(f'\n{aguaS}')
-        print(f'\n{reciclavelS}')
-        print(f'\n{energiaS}')
-        print(f'\n{sustentabilidade}')
+        print(f'data: {data}')
+        print(f'\nconsumo de água: {aguaS}')
+        print(f'\nreciclagem de lixo: {reciclavelS}')
+        print(f'\nuso de energia: {energiaS}')
+        print(f'\nuso de transporte: {sustentabilidade}')
         
 #============ INSERT NO BANCO DE DADOS ================
 
