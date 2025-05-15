@@ -1,11 +1,6 @@
 import mysql.connector
 from datetime import date
 
-
-
-
-
-
 def error():
     print('Valor inválido!')
 
@@ -20,11 +15,6 @@ def conexaobd():
 
     if conexao.is_connected():
         cursor = conexao.cursor()
-
-
-
-
-
 
     return conexao, cursor
 
