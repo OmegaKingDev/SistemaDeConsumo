@@ -29,10 +29,10 @@ def consumo():
         error()
         reciclavel = float(input('Informe a porcentagem de lixo reciclável: '))
 
-    lixo = float(input('Informe a quantidade de lixo total produzido: '))
+    lixo = float(input('Informe a quantidade de lixo total produzido em kg: '))
     while lixo <= 0:
         error()
-        lixo = float(input('Informe a quantidade de lixo total produzido: '))
+        lixo = float(input('Informe a quantidade de lixo total produzido em kg: '))
 
     energia = float(input('Digite o consumo de energia em kWh: '))
     while energia <= 0:
