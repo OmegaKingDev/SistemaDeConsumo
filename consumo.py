@@ -42,6 +42,7 @@ def consumo():
 
 
 
+
     if agua < 150:
         aguaS = 'Alta sustentabilidade'
 
