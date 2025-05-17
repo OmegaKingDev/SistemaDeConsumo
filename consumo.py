@@ -167,85 +167,73 @@ def rodar():
 
         key = np.array([[3, 0],
                         [2, 5]])
-             
-#====================== AGUA =======================
 
-        matrizagua = list(aguaS.replace(" ", "").upper())
-        numerosAgua = [alfabeto[letra] for letra in matrizagua]
+        def cifrar(texto):
 
-        if len(numerosAgua) % 2 != 0:
-            numerosAgua.append(alfabeto['Z'])
+            matriz = list(texto.replace(" ", "").upper())
+            numeros = [alfabeto[letra] for letra in matriz]
+            if len(numeros) % 2 != 0:
+                numeros.append(alfabeto['Z'])
+            resultado = []
+            for i in range(0, len(numeros), 2):
+                par = np.array([[numeros[i]], [numeros[i+1]]])
+                cifrado = np.dot(key, par) % 26
+                resultado.extend(cifrado.flatten())
+            cifradoTexto =  ''.join(alfabetoinv[n] for n in resultado)
 
-        resultadoagua = []
-        for i in range(0, len(numerosAgua), 2):
-            aguapar = np.array([[numerosAgua[i]], [numerosAgua[i+1]]])
-            aguacifrado = np.dot(key, aguapar) % 26
-            resultadoagua.extend(aguacifrado.flatten())
-
-        texto_cifradoagua = [alfabetoinv[n] for n in resultadoagua]
-
-        texto_cifrado_aguastr = ''.join(texto_cifradoagua)
-
-
-#===================== LIXO ========================================
-
-        matrizreciclavel = list(reciclavelS.replace(" ", "").upper())
-        numerosLixo = [alfabeto[letra] for letra in matrizreciclavel]
-
-        if len(numerosLixo) % 2 != 0:
-            numerosLixo.append(alfabeto['Z'])
-
-        resultadolixo = []
-        for i in range(0, len(numerosLixo), 2):
-            lixopar = np.array([[numerosLixo[i]], [numerosLixo[i+1]]])
-            lixocifrado = np.dot(key, lixopar) % 26
-            resultadolixo.extend(lixocifrado.flatten())
-
-        texto_cifradolixo = [alfabetoinv[n] for n in resultadolixo]
-
-        texto_cifrado_lixostr = ''.join(texto_cifradolixo)    
-
-
-#===================== ENERGIA ========================================
-            
-        matrizenergia = list(energiaS.replace(" ", "").upper())
-        numerosenergia = [alfabeto[letra] for letra in matrizenergia]
-
-        if len(numerosenergia) % 2 != 0:
-            numerosenergia.append(alfabeto['Z'])
-
-        resultadoenergia = []
-        for i in range(0, len(numerosenergia), 2):
-            energiapar = np.array([[numerosenergia[i]], [numerosenergia[i+1]]])
-            energiacifrado = np.dot(key, energiapar) % 26
-            resultadoenergia.extend(energiacifrado.flatten())
-
-        texto_cifradoenergia = [alfabetoinv[n] for n in resultadoenergia]
-
-        texto_cifrado_energiastr = ''.join(texto_cifradoenergia)    
-
-
-#===================== transporte ========================================        
-
-        matriztransporte = list(sustentabilidade.replace(" ", "").upper())
-        numerostransporte = [alfabeto[letra] for letra in matriztransporte]
-
-        if len(numerostransporte) % 2 != 0:
-            numerostransporte.append(alfabeto['Z'])
-
-        resultadotransporte = []
-        for i in range(0, len(numerostransporte), 2):
-            transportepar = np.array([[numerostransporte[i]], [numerostransporte[i+1]]])
-            transportecifrado = np.dot(key, transportepar) % 26
-            resultadotransporte.extend(transportecifrado.flatten())
-
-        texto_cifradotransporte = [alfabetoinv[n] for n in resultadotransporte]
-
-        texto_cifrado_transportestr = ''.join(texto_cifradotransporte)    
-
+            return cifradoTexto
         
+        texto_cifrado_aguastr = cifrar(aguaS)
+        texto_cifrado_lixostr = cifrar(reciclavelS)
+        texto_cifrado_energiastr = cifrar(energiaS)
+        texto_cifrado_transportestr = cifrar(sustentabilidade)
+
+
+#========================== Descriptografia ======================
+        def matriz_inversa_mod26(matriz):
+            determinante = int(np.round(np.linalg.det(matriz)))
+            determinante_mod26 = determinante % 26
+
+            for i in range(1, 26):
+                if (determinante_mod26 * i) % 26 == 1:
+                    inverso_determinante = i
+
+
+            adjunta = np.array([[matriz[1][1], -matriz[0][1]],
+                                [-matriz[1][0], matriz[0][0]]])
+
+
+            inversa = (inverso_determinante * adjunta) % 26
+            return inversa        
         
-#============ INSERT NO BANCO DE DADOS ================
+        key_inv = matriz_inversa_mod26(key)
+
+        def descriptografar(texto):
+            numeros = [alfabeto[letra] for letra in texto]
+            resultado = []
+            for i in range(0, len(numeros), 2):
+                par = np.array([[numeros[i]], [numeros[i+1]]])
+                decifrado = np.dot(key_inv, par) % 26
+                resultado.extend(decifrado.flatten())
+            descifradoTexto =  ''.join(alfabetoinv[n] for n in resultado)
+
+            return descifradoTexto
+        
+        texto_decifrado_aguastr = descriptografar(texto_cifrado_aguastr)
+        texto_decifrado_lixostr = descriptografar(texto_cifrado_lixostr)
+        texto_decifrado_energiastr = descriptografar(texto_cifrado_energiastr)
+        texto_decifrado_transportestr = descriptografar(texto_cifrado_transportestr)
+
+        texto_decifrado_aguastr = descriptografar(texto_cifrado_aguastr).replace("ALTASUSTENTABILIDADE", "ALTA SUSTENTABILIDADE").replace("BAIXASUSTENTABILIDADE", "BAIXA SUSTENTABILIDADE").replace("SUSTENTABILIDADEMODERADA", "SUSTENTABILIDADE MODERADA")
+
+        texto_decifrado_lixostr = descriptografar(texto_cifrado_lixostr).replace("ALTASUSTENTABILIDADE", "ALTA SUSTENTABILIDADE").replace("BAIXASUSTENTABILIDADE", "BAIXA SUSTENTABILIDADE").replace("SUSTENTABILIDADEMODERADA", "SUSTENTABILIDADE MODERADA")
+
+        texto_decifrado_energiastr = descriptografar(texto_cifrado_energiastr).replace("ALTASUSTENTABILIDADE", "ALTA SUSTENTABILIDADE").replace("BAIXASUSTENTABILIDADE", "BAIXA SUSTENTABILIDADE").replace("SUSTENTABILIDADEMODERADA", "SUSTENTABILIDADE MODERADA")
+
+        texto_decifrado_transportestr = descriptografar(texto_cifrado_transportestr).replace("ALTASUSTENTABILIDADE", "ALTA SUSTENTABILIDADE").replace("BAIXASUSTENTABILIDADE", "BAIXA SUSTENTABILIDADE").replace("SUSTENTABILIDADEMODERADA", "SUSTENTABILIDADE MODERADA")
+
+
+#======================= INSERT NO BANCO DE DADOS ==================
 
         conexao, cursor = conexaobd()
 
